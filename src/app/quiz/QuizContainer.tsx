@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import QuizQuestion from "./QuizQuestion";
 
 export default function QuizContainer({
   quizzes,
@@ -9,15 +10,6 @@ export default function QuizContainer({
 }) {
   const [score, setScore] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-
-  const handleAnswer = (
-    answer: string,
-    correct: string
-  ) => {
-    if (answer === correct) {
-      setScore((prev) => prev + 1);
-    }
-  };
 
   const handleFinish = () => {
     setSubmitted(true);
@@ -30,12 +22,19 @@ export default function QuizContainer({
       </h2>
 
       {quizzes.map((quiz) => (
-        <QuestionCard
-          key={quiz.id}
-          quiz={quiz}
-          onAnswer={handleAnswer}
-        />
-      ))}
+  <QuizQuestion
+    key={quiz.id}
+    question={quiz.question}
+    optionA={quiz.option_a}
+    optionB={quiz.option_b}
+    optionC={quiz.option_c}
+    optionD={quiz.option_d}
+    correctAnswer={quiz.correct_answer}
+    onCorrect={() =>
+  setScore((prev) => prev + 1)
+}
+  />
+))}
 
       <button
         onClick={handleFinish}
