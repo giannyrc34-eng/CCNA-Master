@@ -8,9 +8,8 @@ export default function Navbar() {
       <Link href="/quiz">Quiz</Link>
       <Link href="/results">Results</Link>
       <Link href="/api">AI Tutor</Link>
-      <Link href="/admin">
-  Admin
-</Link>
+      <Link href="/login">Login</Link>
+      <Link href="/register">Register</Link>
     </nav>
   );
 }

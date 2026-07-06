@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   const handleLogin = async () => {
     const { error } = await supabase.auth.signInWithPassword({
@@ -16,7 +19,7 @@ export default function LoginPage() {
     if (error) {
       alert(error.message);
     } else {
-      alert("Login successful!");
+      router.push("/dashboard");
     }
   };
 
