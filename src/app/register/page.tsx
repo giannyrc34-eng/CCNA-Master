@@ -16,7 +16,7 @@ export default function RegisterPage() {
     if (error) {
       alert(error.message);
     } else {
-      alert("Check your email for confirmation.");
+      alert("Account created Successfully!");
     }
   };
 

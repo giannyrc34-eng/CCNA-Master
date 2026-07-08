@@ -1,8 +1,9 @@
 
-import { supabaseServer } from "../../lib/supabase-server";
+import { getSupabaseServer } from "../../lib/supabase-server";
 import LessonSearch from "./LessonSearch";
 
 export default async function Lessonspage() {
+  const supabaseServer = await getSupabaseServer();
   const { data: lessons, error } =
     await supabaseServer
       .from("lessons")

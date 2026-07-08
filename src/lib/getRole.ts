@@ -1,8 +1,9 @@
-import { supabaseServer } from "./supabase-server";
+import { getSupabaseServer } from "./supabase-server";
 
 export async function getUserRole(
   userId: string
 ) {
+  const supabaseServer = await getSupabaseServer();
   const { data } = await supabaseServer
     .from("profiles")
     .select("role")

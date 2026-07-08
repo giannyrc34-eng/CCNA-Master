@@ -1,6 +1,7 @@
-import { supabaseServer } from "../../lib/supabase-server";
+import { getSupabaseServer } from "../../lib/supabase-server";
 
 export default async function ResultsPage() {
+  const supabaseServer = await getSupabaseServer();
   const { data: results, error } =
     await supabaseServer
       .from("quiz_results")

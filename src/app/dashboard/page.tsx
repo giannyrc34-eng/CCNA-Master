@@ -1,16 +1,19 @@
-import { supabaseServer } from "../../lib/supabase-server";
+import { getSupabaseServer } from "../../lib/supabase-server";
 import { getUserRole } from "../../lib/getRole";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
 export default async function DashboardPage() {
- const {
+const supabaseServer = await getSupabaseServer();
+const {
   data: { user },
 } = await supabaseServer.auth.getUser();
+
 if (!user) {
   redirect("/");
 }
+
 const role = await getUserRole(user.id);
   const { data: lessons } = await supabaseServer
     .from("lessons")

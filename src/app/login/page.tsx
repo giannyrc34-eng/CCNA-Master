@@ -18,9 +18,10 @@ export default function LoginPage() {
 
     if (error) {
       alert(error.message);
-    } else {
-      router.push("/dashboard");
-    }
+   } else {
+  router.refresh();
+  router.push("/dashboard");
+}
   };
 
   return (
