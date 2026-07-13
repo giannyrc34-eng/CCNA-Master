@@ -19,7 +19,6 @@ export default function LoginPage() {
     if (error) {
       alert(error.message);
    } else {
-  router.refresh();
   router.push("/dashboard");
 }
   };
@@ -48,9 +47,12 @@ export default function LoginPage() {
         <button
           className="w-full rounded bg-blue-500 p-2 text-white"
           onClick={handleLogin}
+        
         >
           Login
         </button>
+
+      
       </div>
     </div>
   );

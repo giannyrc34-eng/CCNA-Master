@@ -1,35 +1,36 @@
-import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getSupabaseServer } from "../../lib/supabase-server";
+import { getUserRole } from "../../lib/getRole";
 
-export default function AdminPage() {
+export default async function AdminPage() {
+  const supabase = await getSupabaseServer();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // Not logged in? Go to login.
+  if (!user) {
+    redirect("/login");
+  }
+
+  // Get the user's role
+  const role = await getUserRole(user.id);
+
+  // Not an admin? Go back to dashboard.
+  if (role !== "admin") {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="p-10">
-      <h1 className="mb-8 text-4xl font-bold">
-        Admin Dashboard
+      <h1 className="text-5xl font-bold text-red-500">
+        Admin Panel
       </h1>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <Link
-          href="/admin/add-lesson"
-          className="rounded border p-6 hover:bg-gray-100"
-        >
-          <h2 className="text-2xl font-bold">
-            Add Lesson
-          </h2>
-
-          <p>Create new CCNA lessons.</p>
-        </Link>
-
-        <Link
-          href="/admin/add-quiz"
-          className="rounded border p-6 hover:bg-gray-100"
-        >
-          <h2 className="text-2xl font-bold">
-            Add Quiz
-          </h2>
-
-          <p>Add quiz questions.</p>
-        </Link>
-      </div>
+      <p className="mt-4">
+        Welcome back, Admin!
+      </p>
     </div>
   );
 }

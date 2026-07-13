@@ -14,10 +14,13 @@ export default async function DashboardPage() {
   // Default role for visitors
   let role = "guest";
 
-  // If logged in, get the user's role
-  if (user) {
-    role = (await getUserRole(user.id)) ?? "viewer";
-  }
+if (user) {
+  const dbRole = await getUserRole(user.id);
+
+  console.log("Database role:", dbRole);
+
+  role = dbRole ?? "viewer";
+}
 
   // Load lessons
   const { data: lessons } = await supabaseServer
@@ -54,7 +57,7 @@ export default async function DashboardPage() {
   return (
     <div className="p-10">
       <h1 className="mb-8 text-5xl font-bold text-cyan-400">
-        CCNA Master Dashboard
+        Dashboard
       </h1>
 
       <div className="relative mb-8 overflow-hidden rounded-2xl">
