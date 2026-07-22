@@ -22,106 +22,92 @@ export default function QuizQuestion({
   onAnswer,
 }: QuizQuestionProps) {
   const [selected, setSelected] = useState("");
-  const [answered, setAnswered] = useState(false);
-
-  const options = [
-    optionA,
-    optionB,
-    optionC,
-    optionD,
-  ];
+  const [result, setResult] = useState("");
 
   const handleSubmit = () => {
-    if (!selected || answered) return;
-
-    const isCorrect = selected === correctAnswer;
-
-    setAnswered(true);
-
-    onAnswer(isCorrect);
+    if (selected === correctAnswer) {
+      setResult("✅ Correct!");
+      onAnswer(true);
+    } else {
+      setResult(
+        `❌ Incorrect. Correct Answer: ${correctAnswer}`
+      );
+      onAnswer(false);
+    }
   };
 
   return (
-    <div className="rounded-2xl border border-slate-700 bg-slate-900 p-8 shadow-xl">
-      <h2 className="mb-8 text-2xl font-bold text-white">
+    <div className="mb-8 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
+
+      <h2 className="mb-6 text-xl font-bold text-white">
         {question}
       </h2>
 
-      <div className="space-y-4">
-        {options.map((option, index) => {
-          const letter = String.fromCharCode(65 + index);
+      <div className="space-y-3">
 
-          const isSelected = selected === option;
+        <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-700 bg-slate-950 p-3 text-slate-300 transition hover:border-cyan-400">
+          <input
+            type="radio"
+            name={question}
+            value={optionA}
+            onChange={(e) =>
+              setSelected(e.target.value)
+            }
+          />
+          {optionA}
+        </label>
 
-          const isCorrectAnswer =
-            answered && option === correctAnswer;
+        <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-700 bg-slate-950 p-3 text-slate-300 transition hover:border-cyan-400">
+          <input
+            type="radio"
+            name={question}
+            value={optionB}
+            onChange={(e) =>
+              setSelected(e.target.value)
+            }
+          />
+          {optionB}
+        </label>
 
-          const isWrongAnswer =
-            answered &&
-            isSelected &&
-            option !== correctAnswer;
+        <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-700 bg-slate-950 p-3 text-slate-300 transition hover:border-cyan-400">
+          <input
+            type="radio"
+            name={question}
+            value={optionC}
+            onChange={(e) =>
+              setSelected(e.target.value)
+            }
+          />
+          {optionC}
+        </label>
 
-          return (
-            <button
-              key={option}
-              type="button"
-              disabled={answered}
-              onClick={() => setSelected(option)}
-              className={`flex w-full items-center gap-4 rounded-xl border p-4 text-left transition ${
-                isCorrectAnswer
-                  ? "border-green-500 bg-green-500/20"
-                  : isWrongAnswer
-                  ? "border-red-500 bg-red-500/20"
-                  : isSelected
-                  ? "border-cyan-400 bg-cyan-500/20"
-                  : "border-slate-700 bg-slate-800 hover:border-cyan-400"
-              }`}
-            >
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-700 font-bold">
-                {letter}
-              </span>
+        <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-700 bg-slate-950 p-3 text-slate-300 transition hover:border-cyan-400">
+          <input
+            type="radio"
+            name={question}
+            value={optionD}
+            onChange={(e) =>
+              setSelected(e.target.value)
+            }
+          />
+          {optionD}
+        </label>
 
-              <span className="text-white">
-                {option}
-              </span>
-            </button>
-          );
-        })}
       </div>
 
-      {!answered && (
-        <button
-          onClick={handleSubmit}
-          disabled={!selected}
-          className="mt-8 rounded-xl bg-cyan-500 px-6 py-3 font-semibold text-white transition hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          Check Answer
-        </button>
+      <button
+        onClick={handleSubmit}
+        className="mt-6 rounded-lg bg-cyan-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400"
+      >
+        Submit Answer
+      </button>
+
+      {result && (
+        <p className="mt-4 font-bold text-white">
+          {result}
+        </p>
       )}
 
-      {answered && (
-        <div className="mt-6">
-          {selected === correctAnswer ? (
-            <p className="font-semibold text-green-400">
-              ✅ Correct! Great job.
-            </p>
-          ) : (
-            <p className="font-semibold text-red-400">
-              ❌ Incorrect. The correct answer is:{" "}
-              {correctAnswer}
-            </p>
-          )}
-
-          <button
-            onClick={() =>
-              onAnswer(selected === correctAnswer)
-            }
-            className="mt-4 rounded-xl bg-cyan-500 px-6 py-3 font-semibold text-white transition hover:bg-cyan-600"
-          >
-            Next Question →
-          </button>
-        </div>
-      )}
     </div>
   );
 }
