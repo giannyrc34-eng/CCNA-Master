@@ -30,9 +30,11 @@ export default function QuizContainer({
     optionC={quiz.option_c}
     optionD={quiz.option_d}
     correctAnswer={quiz.correct_answer}
-    onCorrect={() =>
-  setScore((prev) => prev + 1)
-}
+    onAnswer={(isCorrect) => {
+      if (isCorrect) {
+        setScore((prev) => prev + 1);
+      }
+    }}
   />
 ))}
 
